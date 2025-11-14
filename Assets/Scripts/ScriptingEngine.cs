@@ -1,23 +1,22 @@
 using UnityEngine;
-using NLua; // We need this to use NLua's features
+using NLua;
 
 public class ScriptingEngine : MonoBehaviour
 {
-    private Lua lua; // This is our Lua "virtual machine"
+    private Lua lua; // Nasza "wirtualna maszyna" Lua
 
     void Awake()
     {
-        // Initialize the Lua state when the game starts
+        // Inicjalizujemy stan Lua na starcie
         lua = new Lua();
-        // This line allows Lua to access C# public methods/types. It's powerful but be aware of security.
+        // Ta linia pozwala Lua na dostêp do publicznych metod i typów C#.
         lua.LoadCLRPackage();
     }
 
     /// <summary>
-    /// Executes a string of Lua code. This is used to define the player's functions.
+    /// Wykonuje ci¹g znaków jako kod Lua, aby zdefiniowaæ funkcje gracza.
     /// </summary>
-    /// <param name="code">The Lua code written by the player.</param>
-    /// <returns>True if the code executed without errors, false otherwise.</returns>
+    /// <returns>True, jeœli kod wykona³ siê bez b³êdów, w przeciwnym razie false.</returns>
     public bool ExecuteScript(string code)
     {
         try
@@ -27,20 +26,17 @@ public class ScriptingEngine : MonoBehaviour
         }
         catch (NLua.Exceptions.LuaException e)
         {
-            // If there's an error in the Lua code, log it to the Unity console for debugging.
+            // Jeœli jest b³¹d w kodzie Lua, logujemy go do konsoli Unity.
+            // TODO: Wyœwietl ten b³¹d w UI, aby gracz go zobaczy³.
             Debug.LogError("Lua Error: " + e.Message);
             return false;
         }
     }
 
     /// <summary>
-    /// Calls a specific Lua function to determine which block type to place at a given coordinate.
+    /// Wywo³uje konkretn¹ funkcjê Lua, aby okreœliæ typ bloku dla danych wspó³rzêdnych.
     /// </summary>
-    /// <param name="functionName">The name of the Lua function to call.</param>
-    /// <param name="x">The x-coordinate.</param>
-    /// <param name="y">The y-coordinate.</param>
-    /// <param name="z">The z-coordinate.</param>
-    /// <returns>An integer representing the block type (e.g., 0=empty, 1=red, etc.).</returns>
+    /// <returns>Liczba ca³kowita reprezentuj¹ca typ bloku (np. 0=pusty, 1=czerwony, itd.).</returns>
     public int CallVoxelFunction(string functionName, int x, int y, int z)
     {
         try
@@ -48,17 +44,17 @@ public class ScriptingEngine : MonoBehaviour
             LuaFunction func = lua.GetFunction(functionName);
             if (func == null)
             {
-                // The player hasn't defined the function, so we return 0 (empty).
+                // Gracz nie zdefiniowa³ funkcji, wiêc zwracamy 0 (pusty).
                 return 0;
             }
 
-            // Call the function with our x, y, z arguments.
+            // Wywo³ujemy funkcjê z argumentami x, y, z.
             object[] result = func.Call(x, y, z);
 
-            // If the function returns a value, convert it to an integer.
+            // Jeœli funkcja zwróci³a wartoœæ, konwertujemy j¹ na int.
             if (result != null && result.Length > 0 && result[0] != null)
             {
-                // Lua numbers are doubles by default, so we cast to long first, then to int.
+                // Liczby w Lua to domyœlnie double, wiêc rzutujemy najpierw na long, potem na int.
                 return (int)(long)result[0];
             }
         }
@@ -66,7 +62,7 @@ public class ScriptingEngine : MonoBehaviour
         {
             Debug.LogError($"Error calling Lua function '{functionName}': {e.Message}");
         }
-        // If anything goes wrong or the function returns nothing, return 0 (empty).
+        // Jeœli coœ pójdzie nie tak lub funkcja nic nie zwróci, zwracamy 0 (pusty).
         return 0;
     }
 }
