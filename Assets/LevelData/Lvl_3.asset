@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
-  m_Name: Lvl_2
+  m_Name: Lvl_3
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: A Simple Line
-  startingCodeHint: "-- You can use conditions to build\r\n-- along an entire axis.\r\n\r\n--
-    Goal: Build a line of 3 red cubes\r\n-- along the X axis.\r\n\r\nfunction PlaceVoxel(x,
+  levelName: Introducing Color
+  startingCodeHint: "-- It's time to introduce a new color.\r\n-- Take a look at
+    the color legend.\r\n\r\n-- 'return 2' will place a green cube.\r\n\r\n-- Goal:
+    Build a red pillar with\r\n-- a green cube on top.\r\n\r\nfunction PlaceVoxel(x,
     y, z)\r\n  local c = 0\r\n\r\n\r\n\r\n  return c\r\nend"
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
     blockType: 1
-  - position: {x: 1, y: 0, z: 0}
+  - position: {x: 0, y: 1, z: 0}
     blockType: 1
-  - position: {x: 2, y: 0, z: 0}
-    blockType: 1
+  - position: {x: 0, y: 2, z: 0}
+    blockType: 2

@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
   m_Name: Lvl_1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: Yellow Square
-  startingCodeHint: "-- Cel: Zbuduj \u017C\xF3\u0142ty kwadrat 2x2 na ziemi.\r\n--
-    U\u017Cyj 'return 4' dla koloru \u017C\xF3\u0142tego.\r\nfunction PlaceVoxel(x,
-    y, z)\r\n  return 0\r\nend\r\n"
+  levelName: The First Cube
+  startingCodeHint: "-- Your goal is to write code\r\n-- to replicate the reference
+    shape.\r\n\r\n-- The PlaceVoxel function runs for\r\n-- every position (x,y,z)
+    in the grid.\r\n\r\n-- Use 'return 1' to place\r\n-- a red cube.\r\n\r\nfunction
+    PlaceVoxel(x, y, z)\r\n  -- By default, nothing is built.\r\n  local c = 0\r\n\r\n 
+    -- Write your logic here\r\n\r\n  return c\r\nend"
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 0, y: 0, z: 1}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 1}
-    blockType: 4
+    blockType: 1

@@ -1,9 +1,9 @@
 using UnityEngine;
-using UnityEngine.UI; // Potrzebne do komponentu Image
+using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 
-// Struktura do przechowywania informacji o kolorach
+// Struct to define the relationship between an integer ID, a Color, and a Name.
 [System.Serializable]
 public struct ColorMapping
 {
@@ -15,47 +15,61 @@ public struct ColorMapping
 public class GameController : MonoBehaviour
 {
     [Header("UI Component References")]
-    public TMP_InputField codeEditor;
-    public TMP_Text scoreText;
-    public GameObject colorPaletteItemPrefab; // Prefab elementu palety UI
-    public Transform colorPaletteContainer;   // Obiekt-rodzic, w którym tworzymy paletê
+    [SerializeField] private TMP_InputField codeEditor;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private GameObject colorPaletteItemPrefab;
+    [SerializeField] private Transform colorPaletteContainer;
 
-    [Header("Component References")]
-    public CubeGridManager gridManager;
-    public CubeGridManager referenceGridManager;
-    public ScriptingEngine scriptingEngine;
+    [Header("System References")]
+    [SerializeField] private CubeGridManager gridManager;
+    [SerializeField] private CubeGridManager referenceGridManager;
+    [SerializeField] private ScriptingEngine scriptingEngine;
 
     [Header("Game Settings")]
-    public List<ColorMapping> availableColors; // Definiowalna paleta kolorów
-    public int gridSize = 9;
+    [SerializeField] private List<ColorMapping> availableColors;
+    [SerializeField] private int gridSize = 9;
 
     [Header("Level Management")]
-    public List<LevelData> levels; // Lista wszystkich poziomów (plików LevelData)
+    [SerializeField] private List<LevelData> levels;
     private int currentLevelIndex = 0;
 
     void Start()
     {
+        // Validation check to ensure levels exist
         if (levels == null || levels.Count == 0)
         {
-            Debug.LogError("Brak poziomów przypisanych do GameController!");
+            Debug.LogError("No levels assigned to GameController!");
             return;
         }
 
-        // Wczytujemy pierwszy poziom z listy
+        // Load the initial level
         LoadLevel(currentLevelIndex);
-        // Tworzymy legendê kolorów w UI
+
+        // Generate the UI legend based on available colors
         PopulateColorPalette();
     }
 
-    // Metoda wywo³ywana przez przycisk "Run Code"
+    // ---------------------------------------------------------
+    // Core Gameplay Logic
+    // ---------------------------------------------------------
+
+    /// <summary>
+    /// Executed when the "Run Code" button is clicked.
+    /// It interprets the Lua script and builds the voxel grid.
+    /// </summary>
     public void OnRunCodeClicked()
     {
+        // 1. Clear previous results
         gridManager.ClearGrid();
+
+        // 2. Execute the Lua script
         string playerCode = codeEditor.text;
         bool success = scriptingEngine.ExecuteScript(playerCode);
 
-        if (!success) return;
+        if (!success) return; // Stop if Lua syntax error occurred
 
+        // 3. Iterate through the grid space
+        // Calculate bounds to center the grid (e.g., from -4 to +4 for a size of 9)
         int start = -Mathf.FloorToInt(gridSize / 2.0f);
         int end = Mathf.CeilToInt(gridSize / 2.0f);
 
@@ -65,7 +79,10 @@ public class GameController : MonoBehaviour
             {
                 for (int z = start; z < end; z++)
                 {
+                    // Call the specific function defined in Lua script
                     int blockType = scriptingEngine.CallVoxelFunction("PlaceVoxel", x, y, z);
+
+                    // If the function returns a valid block type (>0), place a cube
                     if (blockType > 0)
                     {
                         Color blockColor = GetColorFromType(blockType);
@@ -74,47 +91,15 @@ public class GameController : MonoBehaviour
                 }
             }
         }
+
+        // 4. Validate the result against the reference
         CompareGrids();
     }
 
-    // Metoda do wczytywania poziomu o podanym indeksie
-    public void LoadLevel(int levelIndex)
-    {
-        if (levelIndex < 0 || levelIndex >= levels.Count)
-        {
-            Debug.LogError("Próba wczytania nieistniej¹cego poziomu!");
-            return;
-        }
-
-        currentLevelIndex = levelIndex;
-        LevelData levelToLoad = levels[currentLevelIndex];
-
-        referenceGridManager.ClearGrid();
-        foreach (VoxelInfo voxel in levelToLoad.referenceShape)
-        {
-            Color targetColor = GetColorFromType(voxel.blockType);
-            referenceGridManager.SetCube(voxel.position, true, targetColor);
-        }
-
-        codeEditor.text = levelToLoad.startingCodeHint;
-        gridManager.ClearGrid();
-        CompareGrids();
-    }
-
-    // Metody do nawigacji (dla przycisków UI)
-    public void LoadNextLevel()
-    {
-        int nextIndex = (currentLevelIndex + 1) % levels.Count;
-        LoadLevel(nextIndex);
-    }
-
-    public void ReloadCurrentLevel()
-    {
-        LoadLevel(currentLevelIndex);
-    }
-
-    // Metoda porównuj¹ca obie siatki
-    void CompareGrids()
+    /// <summary>
+    /// Compares the player's grid with the reference grid and calculates the score.
+    /// </summary>
+    private void CompareGrids()
     {
         int correctCubes = 0;
         int wrongColorCubes = 0;
@@ -132,6 +117,7 @@ public class GameController : MonoBehaviour
                 for (int z = start; z < end; z++)
                 {
                     Vector3Int currentPos = new Vector3Int(x, y, z);
+
                     bool playerHasCube = gridManager.TryGetCubeColor(currentPos, out Color playerColor);
                     bool referenceHasCube = referenceGridManager.TryGetCubeColor(currentPos, out Color referenceColor);
 
@@ -140,57 +126,120 @@ public class GameController : MonoBehaviour
                         totalReferenceCubes++;
                         if (playerHasCube)
                         {
+                            // Both have cube: Check color match
                             if (playerColor == referenceColor) correctCubes++;
                             else wrongColorCubes++;
                         }
-                        else missingCubes++;
+                        else
+                        {
+                            // Reference has cube, player does not
+                            missingCubes++;
+                        }
                     }
                     else if (playerHasCube)
                     {
+                        // Player has cube where none should be
                         extraCubes++;
                     }
                 }
             }
         }
 
+        // Calculate score percentage
         float matchPercentage = 0;
-        int totalPossibleMistakes = totalReferenceCubes + extraCubes;
-        if (totalPossibleMistakes > 0)
+        int totalErrors = wrongColorCubes + missingCubes + extraCubes;
+        int totalChecked = correctCubes + totalErrors;
+
+        if (totalChecked > 0)
         {
-            matchPercentage = ((float)correctCubes / (correctCubes + wrongColorCubes + missingCubes + extraCubes)) * 100f;
+            matchPercentage = ((float)correctCubes / totalChecked) * 100f;
         }
         else
         {
-            matchPercentage = 100f;
+            matchPercentage = 100f; // Empty grid matches empty grid
         }
 
-        if (matchPercentage >= 100f && extraCubes == 0 && wrongColorCubes == 0)
+        UpdateScoreUI(matchPercentage, wrongColorCubes, missingCubes, extraCubes);
+    }
+
+    // ---------------------------------------------------------
+    // Level Management
+    // ---------------------------------------------------------
+
+    public void LoadLevel(int levelIndex)
+    {
+        if (levelIndex < 0 || levelIndex >= levels.Count)
+        {
+            Debug.LogError("Attempted to load an invalid level index!");
+            return;
+        }
+
+        currentLevelIndex = levelIndex;
+        LevelData levelToLoad = levels[currentLevelIndex];
+
+        // Setup Reference Grid
+        referenceGridManager.ClearGrid();
+        foreach (VoxelInfo voxel in levelToLoad.referenceShape)
+        {
+            Color targetColor = GetColorFromType(voxel.blockType);
+            referenceGridManager.SetCube(voxel.position, true, targetColor);
+        }
+
+        // Reset Player Grid and UI
+        codeEditor.text = levelToLoad.startingCodeHint;
+        gridManager.ClearGrid();
+
+        // Run comparison immediately to show initial state (usually 0%)
+        CompareGrids();
+    }
+
+    public void LoadNextLevel()
+    {
+        int nextIndex = (currentLevelIndex + 1) % levels.Count;
+        LoadLevel(nextIndex);
+    }
+
+    public void ReloadCurrentLevel()
+    {
+        LoadLevel(currentLevelIndex);
+    }
+
+    // ---------------------------------------------------------
+    // UI & Helper Methods
+    // ---------------------------------------------------------
+
+    private void UpdateScoreUI(float matchPercentage, int wrongColor, int missing, int extra)
+    {
+        if (matchPercentage >= 100f && extra == 0 && wrongColor == 0)
         {
             scoreText.color = Color.green;
-            scoreText.text = "IDEALNIE!";
+            scoreText.text = "PERFECT!";
         }
         else
         {
             scoreText.color = Color.white;
-            scoreText.text = $"Dopasowanie: {matchPercentage:F1}%\n" +
-                             $"<color=red>B³êdny kolor: {wrongColorCubes}</color> | " +
-                             $"<color=yellow>Brakuj¹ce: {missingCubes}</color> | " +
-                             $"<color=grey>Dodatkowe: {extraCubes}</color>";
+            // Using Rich Text for coloring specific parts of the string
+            scoreText.text = $"Match: {matchPercentage:F1}%\n" +
+                             $"<color=red>Wrong Color: {wrongColor}</color> | " +
+                             $"<color=yellow>Missing: {missing}</color> | " +
+                             $"<color=white>Extra: {extra}</color>";
         }
     }
 
-    // Metoda tworz¹ca legendê kolorów w UI
-    void PopulateColorPalette()
+    private void PopulateColorPalette()
     {
+        // Clear existing items
         foreach (Transform child in colorPaletteContainer)
         {
             Destroy(child.gameObject);
         }
 
+        // Create new items for each color in settings
         foreach (var mapping in availableColors)
         {
             GameObject newItem = Instantiate(colorPaletteItemPrefab, colorPaletteContainer);
             ColorPaletteItemUI itemUI = newItem.GetComponent<ColorPaletteItemUI>();
+
             if (itemUI != null)
             {
                 itemUI.SetData(mapping.colorValue, mapping.blockType, mapping.colorName);
@@ -199,7 +248,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    // Prywatna metoda pomocnicza do zamiany typu bloku na kolor
+    /// <summary>
+    /// Helper to find Color by integer type ID.
+    /// </summary>
     private Color GetColorFromType(int type)
     {
         foreach (var mapping in availableColors)
@@ -209,6 +260,7 @@ public class GameController : MonoBehaviour
                 return mapping.colorValue;
             }
         }
-        return Color.magenta; // Magenta jako kolor b³êdu, jeœli typ nie zostanie znaleziony
+        // Return magenta to indicate an error (missing color mapping)
+        return Color.magenta;
     }
 }

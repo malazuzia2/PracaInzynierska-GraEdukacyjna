@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems; // Potrzebne do sprawdzania, czy kursor jest nad UI
 
 public class SplitScreenCameraController : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class SplitScreenCameraController : MonoBehaviour
     public Transform playerTarget;
     public Transform referenceTarget;
 
-    // Ustawienia kamery (takie same jak w starym OrbitCamera)
+    // Ustawienia kamery
     public float distance = 10.0f;
     public float xSpeed = 120.0f;
     public float ySpeed = 120.0f;
@@ -30,7 +31,6 @@ public class SplitScreenCameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        // Sprawdzamy, czy mamy wszystkie potrzebne odniesienia
         if (playerCamera && referenceCamera && playerTarget && referenceTarget)
         {
             // Obracanie za pomoc¹ lewego przycisku myszy
@@ -41,21 +41,25 @@ public class SplitScreenCameraController : MonoBehaviour
                 y = ClampAngle(y, yMinLimit, yMaxLimit);
             }
 
-            // Zoom za pomoc¹ kó³ka myszy
-            distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-            distance = Mathf.Clamp(distance, distanceMin, distanceMax);
+            // --- POPRAWIONA LOGIKA ZOOMU ---
+            // Najpierw sprawdzamy, czy kursor myszy NIE jest nad elementem UI.
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                // Dopiero wtedy obs³ugujemy scrollowanie.
+                distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+                distance = Mathf.Clamp(distance, distanceMin, distanceMax);
+            }
 
             // Wspólna rotacja dla obu kamer
             Quaternion rotation = Quaternion.Euler(y, x, 0);
 
-            // --- Ustawianie Kamery Gracza ---
+            // Ustawianie Kamery Gracza
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 playerPosition = rotation * negDistance + playerTarget.position;
             playerCamera.transform.rotation = rotation;
             playerCamera.transform.position = playerPosition;
 
-            // --- Ustawianie Kamery Referencyjnej ---
-            // U¿ywamy tej samej rotacji i odleg³oœci, ale innego celu!
+            // Ustawianie Kamery Referencyjnej
             Vector3 referencePosition = rotation * negDistance + referenceTarget.position;
             referenceCamera.transform.rotation = rotation;
             referenceCamera.transform.position = referencePosition;
