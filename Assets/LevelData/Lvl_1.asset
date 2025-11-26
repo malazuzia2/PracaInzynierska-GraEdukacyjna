@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Lvl_1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: The First Cube
-  startingCodeHint: "-- Your goal is to write code\r\n-- to replicate the reference
-    shape.\r\n\r\n-- The PlaceVoxel function runs for\r\n-- every position (x,y,z)
+  startingCodeHint: "-- The PlaceVoxel function runs for\r\n-- every position (x,y,z)
     in the grid.\r\n\r\n-- Use 'return 1' to place\r\n-- a red cube.\r\n\r\nfunction
     PlaceVoxel(x, y, z)\r\n  -- By default, nothing is built.\r\n  local c = 0\r\n\r\n 
     -- Write your logic here\r\n\r\n  return c\r\nend"

@@ -199,6 +199,11 @@ public class GameController : MonoBehaviour
         LoadLevel(nextIndex);
     }
 
+    public void PreviousNextLevel()
+    {
+        int nextIndex = (currentLevelIndex - 1) % levels.Count;
+        LoadLevel(nextIndex);
+    }
     public void ReloadCurrentLevel()
     {
         LoadLevel(currentLevelIndex);
