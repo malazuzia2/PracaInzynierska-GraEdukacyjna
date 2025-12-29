@@ -10,30 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
-  m_Name: Lvl_3
+  m_Name: Lvl_6
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: A Flat 3x3 Floor
-  startingCodeHint: "-- Goal: Build a flat 3x3 blue floor.\r\n-- This code currently
-    builds a single line of blocks.\r\n-- Add another 'and' condition to the 'if'
-    statement\r\n-- to also limit the z-axis from -1 to 1.\r\n\r\nfunction PlaceVoxel(x,
-    y, z)\r\n  local color = 0\r\n  \r\n  if y == 0 and x >= -1 and x <= 1 then\r\n   
-    color = 3\r\n  end\r\n  \r\n  return color\r\nend"
+  levelName: Checkerboard
+  startingCodeHint: "-- Goal: Create a checkerboard pattern.\r\n-- This code builds
+    a solid red floor.\r\n-- Change it to use an 'if/else' statement with the\r\n--
+    modulo operator '%' to choose between red (1) and blue (3).\r\n-- Hint: if (x
+    + z) % 2 == 0 then ...\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n  local color =
+    0\r\n  \r\n  if y == 0 then\r\n    -- This part needs an if/else block!\r\n   
+    color = 1 \r\n  end\r\n  \r\n  return color\r\nend"
   referenceShape:
   - position: {x: -1, y: 0, z: -1}
-    blockType: 3
+    blockType: 1
   - position: {x: -1, y: 0, z: 0}
     blockType: 3
   - position: {x: -1, y: 0, z: 1}
-    blockType: 3
+    blockType: 1
   - position: {x: 0, y: 0, z: -1}
     blockType: 3
   - position: {x: 0, y: 0, z: 0}
-    blockType: 3
+    blockType: 1
   - position: {x: 0, y: 0, z: 1}
     blockType: 3
   - position: {x: 1, y: 0, z: -1}
-    blockType: 3
+    blockType: 1
   - position: {x: 1, y: 0, z: 0}
     blockType: 3
   - position: {x: 1, y: 0, z: 1}
-    blockType: 3
+    blockType: 1

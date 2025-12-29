@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Lvl_1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: The First Cube
-  startingCodeHint: "-- The PlaceVoxel function runs for\r\n-- every position (x,y,z)
-    in the grid.\r\n\r\n-- Use 'return 1' to place\r\n-- a red cube.\r\n\r\nfunction
-    PlaceVoxel(x, y, z)\r\n  -- By default, nothing is built.\r\n  local c = 0\r\n\r\n 
-    -- Write your logic here\r\n\r\n  return c\r\nend"
+  startingCodeHint: "-- Goal: Build a single red block at the center (0, 0, 0).\r\n--
+    The 'if' statement below checks the coordinates.\r\n-- Inside the 'if', you need
+    to change the value of 'color'.\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n  local
+    color = 0\r\n  \r\n  if x == 0 and y == 0 and z == 0 then\r\n    -- Change this
+    line to place a red block (type 1)\r\n    color = 0 \r\n  end\r\n  \r\n  return
+    color\r\nend"
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
     blockType: 1

@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-
-// Struct to define the relationship between an integer ID, a Color, and a Name.
+ 
 [System.Serializable]
 public struct ColorMapping
 {
@@ -19,6 +18,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private GameObject colorPaletteItemPrefab;
     [SerializeField] private Transform colorPaletteContainer;
+    public TMP_Text errorText;
 
     [Header("System References")]
     [SerializeField] private CubeGridManager gridManager;
@@ -34,42 +34,36 @@ public class GameController : MonoBehaviour
     private int currentLevelIndex = 0;
 
     void Start()
-    {
-        // Validation check to ensure levels exist
+    { 
         if (levels == null || levels.Count == 0)
         {
             Debug.LogError("No levels assigned to GameController!");
             return;
         }
-
-        // Load the initial level
-        LoadLevel(currentLevelIndex);
-
-        // Generate the UI legend based on available colors
+         
+        LoadLevel(currentLevelIndex); 
         PopulateColorPalette();
     }
-
-    // ---------------------------------------------------------
-    // Core Gameplay Logic
-    // ---------------------------------------------------------
-
-    /// <summary>
-    /// Executed when the "Run Code" button is clicked.
-    /// It interprets the Lua script and builds the voxel grid.
-    /// </summary>
+     
     public void OnRunCodeClicked()
     {
-        // 1. Clear previous results
+        errorText.text = "";
+        errorText.gameObject.SetActive(false);
+
         gridManager.ClearGrid();
 
         // 2. Execute the Lua script
         string playerCode = codeEditor.text;
-        bool success = scriptingEngine.ExecuteScript(playerCode);
+        string errorMessage = scriptingEngine.ExecuteScript(playerCode);
 
-        if (!success) return; // Stop if Lua syntax error occurred
+        if (!string.IsNullOrEmpty(errorMessage))
+        { 
+            errorText.gameObject.SetActive(true);
+            errorText.text = errorMessage;
+            return;  
+        }
 
-        // 3. Iterate through the grid space
-        // Calculate bounds to center the grid (e.g., from -4 to +4 for a size of 9)
+
         int start = -Mathf.FloorToInt(gridSize / 2.0f);
         int end = Mathf.CeilToInt(gridSize / 2.0f);
 
@@ -78,11 +72,9 @@ public class GameController : MonoBehaviour
             for (int y = start; y < end; y++)
             {
                 for (int z = start; z < end; z++)
-                {
-                    // Call the specific function defined in Lua script
+                { 
                     int blockType = scriptingEngine.CallVoxelFunction("PlaceVoxel", x, y, z);
-
-                    // If the function returns a valid block type (>0), place a cube
+                     
                     if (blockType > 0)
                     {
                         Color blockColor = GetColorFromType(blockType);
@@ -90,15 +82,10 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
-        }
-
-        // 4. Validate the result against the reference
+        } 
         CompareGrids();
     }
-
-    /// <summary>
-    /// Compares the player's grid with the reference grid and calculates the score.
-    /// </summary>
+     
     private void CompareGrids()
     {
         int correctCubes = 0;
@@ -125,27 +112,23 @@ public class GameController : MonoBehaviour
                     {
                         totalReferenceCubes++;
                         if (playerHasCube)
-                        {
-                            // Both have cube: Check color match
+                        { 
                             if (playerColor == referenceColor) correctCubes++;
                             else wrongColorCubes++;
                         }
                         else
-                        {
-                            // Reference has cube, player does not
+                        { 
                             missingCubes++;
                         }
                     }
                     else if (playerHasCube)
-                    {
-                        // Player has cube where none should be
+                    { 
                         extraCubes++;
                     }
                 }
             }
         }
-
-        // Calculate score percentage
+         
         float matchPercentage = 0;
         int totalErrors = wrongColorCubes + missingCubes + extraCubes;
         int totalChecked = correctCubes + totalErrors;
@@ -156,7 +139,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            matchPercentage = 100f; // Empty grid matches empty grid
+            matchPercentage = 100f;  
         }
 
         UpdateScoreUI(matchPercentage, wrongColorCubes, missingCubes, extraCubes);
@@ -176,20 +159,17 @@ public class GameController : MonoBehaviour
 
         currentLevelIndex = levelIndex;
         LevelData levelToLoad = levels[currentLevelIndex];
-
-        // Setup Reference Grid
+ 
         referenceGridManager.ClearGrid();
         foreach (VoxelInfo voxel in levelToLoad.referenceShape)
         {
             Color targetColor = GetColorFromType(voxel.blockType);
             referenceGridManager.SetCube(voxel.position, true, targetColor);
         }
-
-        // Reset Player Grid and UI
+         
         codeEditor.text = levelToLoad.startingCodeHint;
         gridManager.ClearGrid();
-
-        // Run comparison immediately to show initial state (usually 0%)
+         
         CompareGrids();
     }
 
@@ -222,8 +202,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            scoreText.color = Color.white;
-            // Using Rich Text for coloring specific parts of the string
+            scoreText.color = Color.white; 
             scoreText.text = $"Match: {matchPercentage:F1}%\n" +
                              $"<color=red>Wrong Color: {wrongColor}</color> | " +
                              $"<color=yellow>Missing: {missing}</color> | " +
@@ -232,14 +211,12 @@ public class GameController : MonoBehaviour
     }
 
     private void PopulateColorPalette()
-    {
-        // Clear existing items
+    { 
         foreach (Transform child in colorPaletteContainer)
         {
             Destroy(child.gameObject);
         }
-
-        // Create new items for each color in settings
+         
         foreach (var mapping in availableColors)
         {
             GameObject newItem = Instantiate(colorPaletteItemPrefab, colorPaletteContainer);
@@ -251,11 +228,7 @@ public class GameController : MonoBehaviour
             }
             newItem.SetActive(true);
         }
-    }
-
-    /// <summary>
-    /// Helper to find Color by integer type ID.
-    /// </summary>
+    } 
     private Color GetColorFromType(int type)
     {
         foreach (var mapping in availableColors)
@@ -264,8 +237,7 @@ public class GameController : MonoBehaviour
             {
                 return mapping.colorValue;
             }
-        }
-        // Return magenta to indicate an error (missing color mapping)
+        } 
         return Color.magenta;
     }
 }

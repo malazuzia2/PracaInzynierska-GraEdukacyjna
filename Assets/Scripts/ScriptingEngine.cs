@@ -11,17 +11,17 @@ public class ScriptingEngine : MonoBehaviour
         lua.LoadCLRPackage();
     }
      
-    public bool ExecuteScript(string code)
+    public string ExecuteScript(string code)
     {
         try
         {
             lua.DoString(code);
-            return true;
+            return null;
         }
         catch (NLua.Exceptions.LuaException e)
         {
             Debug.LogError("Lua Error: " + e.Message);
-            return false;
+            return e.Message;
         }
     }
 

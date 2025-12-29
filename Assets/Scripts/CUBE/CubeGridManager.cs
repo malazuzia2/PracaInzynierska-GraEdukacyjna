@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 public class CubeGridManager : MonoBehaviour
 {
-    // Ma³a struktura do przechowywania informacji o pojedynczej kostce
     private struct CubeInfo
     {
         public GameObject gameObject;
@@ -13,7 +12,6 @@ public class CubeGridManager : MonoBehaviour
     public GameObject cubePrefab;
     public int targetLayer;
 
-    // Zmieniamy s³ownik, aby przechowywa³ nasz¹ now¹ strukturê CubeInfo
     private Dictionary<Vector3Int, CubeInfo> cubeGrid;
 
     private MaterialPropertyBlock propertyBlock;
@@ -21,7 +19,6 @@ public class CubeGridManager : MonoBehaviour
 
     void Awake()
     {
-        // Inicjujemy nowy typ s³ownika
         cubeGrid = new Dictionary<Vector3Int, CubeInfo>();
         propertyBlock = new MaterialPropertyBlock();
     }
@@ -37,12 +34,10 @@ public class CubeGridManager : MonoBehaviour
             }
             else
             {
-                // Aktualizujemy zarówno kolor w naszej strukturze, jak i na ekranie
                 existingCubeInfo.color = color;
                 Renderer cubeRenderer = existingCubeInfo.gameObject.GetComponent<Renderer>();
                 propertyBlock.SetColor(ColorID, color);
                 cubeRenderer.SetPropertyBlock(propertyBlock);
-                // Zapisujemy zaktualizowan¹ strukturê z powrotem do s³ownika
                 cubeGrid[position] = existingCubeInfo;
             }
         }
@@ -58,7 +53,6 @@ public class CubeGridManager : MonoBehaviour
                 propertyBlock.SetColor(ColorID, color);
                 cubeRenderer.SetPropertyBlock(propertyBlock);
 
-                // Tworzymy now¹ strukturê CubeInfo i dodajemy j¹ do s³ownika
                 CubeInfo newCubeInfo = new CubeInfo { gameObject = newCubeGO, color = color };
                 cubeGrid[position] = newCubeInfo;
             }
@@ -74,13 +68,11 @@ public class CubeGridManager : MonoBehaviour
         cubeGrid.Clear();
     }
 
-    // TA METODA JEST TERAZ POPRAWNA!
-    // Odczytuje kolor z naszej zapisanej struktury, a nie z renderera.
+ 
     public bool TryGetCubeColor(Vector3Int position, out Color color)
     {
         if (cubeGrid.TryGetValue(position, out CubeInfo cubeInfo))
         {
-            // Zwracamy kolor, który sami zapisaliœmy. To jest gwarantowanie poprawne.
             color = cubeInfo.color;
             return true;
         }

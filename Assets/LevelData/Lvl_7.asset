@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
+  m_Name: Lvl_7
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: 'The Hollow Box '
+  startingCodeHint: "-- Goal: Build the walls of a 4x4x4 green box.\r\n-- This code
+    builds a SOLID 4x4x4 box.\r\n-- Add a condition using 'and not' to make the inside
+    hollow.\r\n-- The hollow space is from 1 to 2 on all axes.\r\n\r\nfunction PlaceVoxel(x,
+    y, z)\r\n  local color = 0\r\n  \r\n  if x >= 0 and x < 4 and y >= 0 and y <
+    4 and z >= 0 and z < 4 then\r\n    -- How do you exclude the center part?\r\n   
+    color = 2\r\n  end\r\n  \r\n  return color\r\nend"
+  referenceShape:
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 1}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 2}
+    blockType: 2
+  - position: {x: 1, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 1, y: 0, z: 1}
+    blockType: 2
+  - position: {x: 1, y: 0, z: 2}
+    blockType: 2
+  - position: {x: 2, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 2, y: 0, z: 1}
+    blockType: 2
+  - position: {x: 2, y: 0, z: 2}
+    blockType: 2
+  - position: {x: 0, y: 1, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 1, z: 1}
+    blockType: 2
+  - position: {x: 0, y: 1, z: 2}
+    blockType: 2
+  - position: {x: 1, y: 1, z: 0}
+    blockType: 2
+  - position: {x: 1, y: 1, z: 2}
+    blockType: 2
+  - position: {x: 2, y: 1, z: 0}
+    blockType: 2
+  - position: {x: 2, y: 1, z: 1}
+    blockType: 2
+  - position: {x: 2, y: 1, z: 2}
+    blockType: 2
+  - position: {x: 0, y: 2, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 2
+  - position: {x: 2, y: 2, z: 2}
+    blockType: 2

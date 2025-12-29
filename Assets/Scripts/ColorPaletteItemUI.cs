@@ -3,8 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ColorPaletteItemUI : MonoBehaviour
-{
-    // Publiczne referencje, które przypiszemy w Inspektorze
+{ 
     public Image colorSwatchImage;
     public TMP_Text colorInfoText;
 

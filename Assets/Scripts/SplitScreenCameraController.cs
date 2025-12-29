@@ -2,14 +2,12 @@ using UnityEngine;
 using UnityEngine.EventSystems; // Potrzebne do sprawdzania, czy kursor jest nad UI
 
 public class SplitScreenCameraController : MonoBehaviour
-{
-    // Publiczne odniesienia do naszych kamer i celów
+{ 
     public Camera playerCamera;
     public Camera referenceCamera;
     public Transform playerTarget;
     public Transform referenceTarget;
-
-    // Ustawienia kamery
+     
     public float distance = 10.0f;
     public float xSpeed = 120.0f;
     public float ySpeed = 120.0f;
@@ -32,34 +30,26 @@ public class SplitScreenCameraController : MonoBehaviour
     void LateUpdate()
     {
         if (playerCamera && referenceCamera && playerTarget && referenceTarget)
-        {
-            // Obracanie za pomoc¹ lewego przycisku myszy
+        { 
             if (Input.GetMouseButton(0))
             {
                 x += Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
                 y -= Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
                 y = ClampAngle(y, yMinLimit, yMaxLimit);
-            }
-
-            // --- POPRAWIONA LOGIKA ZOOMU ---
-            // Najpierw sprawdzamy, czy kursor myszy NIE jest nad elementem UI.
+            } 
             if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                // Dopiero wtedy obs³ugujemy scrollowanie.
+            { 
                 distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
                 distance = Mathf.Clamp(distance, distanceMin, distanceMax);
             }
-
-            // Wspólna rotacja dla obu kamer
+             
             Quaternion rotation = Quaternion.Euler(y, x, 0);
-
-            // Ustawianie Kamery Gracza
+             
             Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
             Vector3 playerPosition = rotation * negDistance + playerTarget.position;
             playerCamera.transform.rotation = rotation;
             playerCamera.transform.position = playerPosition;
-
-            // Ustawianie Kamery Referencyjnej
+             
             Vector3 referencePosition = rotation * negDistance + referenceTarget.position;
             referenceCamera.transform.rotation = rotation;
             referenceCamera.transform.position = referencePosition;

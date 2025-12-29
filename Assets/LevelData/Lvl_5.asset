@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
-  m_Name: Lvl_2
+  m_Name: Lvl_5
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: A Simple Line
-  startingCodeHint: "-- Goal: Build a green pillar 3 blocks high.\r\n-- This code
-    only builds the bottom block of the pillar (at y=0).\r\n-- How can you change
-    the 'y == 0' condition\r\n-- to include y=1 and y=2 as well?\r\n\r\nfunction
+  levelName: A Pillar with a Hat
+  startingCodeHint: "-- Goal: Build a red pillar with a green block on top.\r\n--
+    This code builds a 4-block high red pillar.\r\n-- Add a NEW 'if' statement AFTER
+    this one to\r\n-- change the color of just the top block (y=3) to green.\r\n\r\nfunction
     PlaceVoxel(x, y, z)\r\n  local color = 0\r\n  \r\n  if x == 0 and z == 0 and
-    y == 0 then\r\n    color = 2\r\n  end\r\n  \r\n  return color\r\nend"
+    y >= 0 and y < 4 then\r\n    color = 1 -- Red\r\n  end\r\n  \r\n  -- Add your
+    new 'if' statement here to place the \"hat\"!\r\n  \r\n  return color\r\nend"
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
-    blockType: 2
+    blockType: 1
   - position: {x: 0, y: 1, z: 0}
-    blockType: 2
+    blockType: 1
   - position: {x: 0, y: 2, z: 0}
+    blockType: 1
+  - position: {x: 0, y: 3, z: 0}
     blockType: 2
