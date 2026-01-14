@@ -51,8 +51,7 @@ public class GameController : MonoBehaviour
         errorText.gameObject.SetActive(false);
 
         gridManager.ClearGrid();
-
-        // 2. Execute the Lua script
+        
         string playerCode = codeEditor.text;
         string errorMessage = scriptingEngine.ExecuteScript(playerCode);
 

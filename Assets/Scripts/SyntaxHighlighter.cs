@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Linq; // Potrzebne do string.Join
+using System.Linq; 
 
 public class SyntaxHighlighter : MonoBehaviour
 {
@@ -16,7 +16,9 @@ public class SyntaxHighlighter : MonoBehaviour
     public Color numberColor = new Color(0.7f, 0.8f, 0.6f);
     public Color functionNameColor = new Color(0.86f, 0.86f, 0.6f);
 
-    private readonly string[] keywords = { "and", "break", "do", "else", "elseif", "end", "false", "for", "function", "if", "in", "local", "nil", "not", "or", "repeat", "return", "then", "true", "until", "while" };
+    private readonly string[] keywords = { "and", "break", "do", "else", "elseif", 
+        "end", "false", "for", "function", "if", "in", "local", "nil", "not", "or", 
+        "repeat", "return", "then", "true", "until", "while" };
 
     private Regex syntaxRegex;
 
@@ -24,12 +26,11 @@ public class SyntaxHighlighter : MonoBehaviour
     {
         string keywordPattern = $"\\b({string.Join("|", keywords)})\\b";
         string pattern =
-            $"(?<comment>--.*)|" +         // Grupa "comment"
-            $"(?<string>\"[^\"]*\")|" +   // Grupa "string"
-            $"(?<function>{keywordPattern})|" + // Grupa "function" (dla s³owa kluczowego "function")
-            $"(?<keyword>{keywordPattern})|" + // Grupa "keyword" (dla reszty s³ów kluczowych)
-            $"(?<number>\\b\\d+\\.?\\d*\\b)|" + // Grupa "number" (z obs³ug¹ liczb zmiennoprzecinkowych)
-            $"(?<funcname>(?<=function\\s+)[a-zA-Z_][a-zA-Z0-9_]*)"; // Grupa "funcname" (nazwa funkcji)
+            $"(?<comment>--.*)|" +
+            $"(?<string>\"[^\"]*\")|" +
+            $"(?<keyword>{keywordPattern})|" +
+            $"(?<number>\\b\\d+\\.?\\d*\\b)|" +
+            $"(?<funcname>(?<=function\\s+)[a-zA-Z_][a-zA-Z0-9_]*)";
 
         syntaxRegex = new Regex(pattern, RegexOptions.ExplicitCapture);
 
@@ -41,6 +42,8 @@ public class SyntaxHighlighter : MonoBehaviour
         }
     }
 
+
+
     void HighlightSyntax(string text)
     {
         string highlightedText = syntaxRegex.Replace(text, MatchEvaluator);
@@ -50,18 +53,17 @@ public class SyntaxHighlighter : MonoBehaviour
 
     private string MatchEvaluator(Match match)
     {
+
         if (match.Groups["comment"].Success)
             return $"<color=#{ColorUtility.ToHtmlStringRGB(commentColor)}>{match.Value}</color>";
         if (match.Groups["string"].Success)
             return $"<color=#{ColorUtility.ToHtmlStringRGB(stringColor)}>{match.Value}</color>";
-        if (match.Groups["function"].Value == "function")
-            return $"<color=#{ColorUtility.ToHtmlStringRGB(keywordColor)}>{match.Value}</color>";
+        if (match.Groups["funcname"].Success)
+            return $"<color=#{ColorUtility.ToHtmlStringRGB(functionNameColor)}>{match.Value}</color>";
         if (match.Groups["keyword"].Success)
             return $"<color=#{ColorUtility.ToHtmlStringRGB(keywordColor)}>{match.Value}</color>";
         if (match.Groups["number"].Success)
             return $"<color=#{ColorUtility.ToHtmlStringRGB(numberColor)}>{match.Value}</color>";
-        if (match.Groups["funcname"].Success)
-            return $"<color=#{ColorUtility.ToHtmlStringRGB(functionNameColor)}>{match.Value}</color>";
 
         return match.Value;
     }
