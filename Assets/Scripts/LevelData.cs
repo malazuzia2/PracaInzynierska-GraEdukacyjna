@@ -14,5 +14,7 @@ public class LevelData : ScriptableObject
     public string levelName;
     [TextArea(10, 20)]  
     public string startingCodeHint;
+    [TextArea(10, 20)]
+    public string solutionCode;
     public List<VoxelInfo> referenceShape;
 }

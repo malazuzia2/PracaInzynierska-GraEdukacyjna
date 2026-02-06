@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using System.Collections; // Potrzebne do Coroutines
+using System.Collections;  
 
 public class LayoutSynchronizer : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class LayoutSynchronizer : MonoBehaviour
     public RectTransform contentRect;
 
     private TMP_Text sourceTextComponent;
-    private bool isDirty = false; // Flaga, która mówi nam, czy trzeba zaktualizowaæ layout
+    private bool isDirty = false;  
 
     void Awake()
     {
@@ -18,20 +18,16 @@ public class LayoutSynchronizer : MonoBehaviour
             sourceTextComponent = sourceTextRect.GetComponent<TMP_Text>();
         }
     }
-
-    // Ta metoda jest wywo³ywana, gdy skrypt jest w³¹czany
+     
     void OnEnable()
-    {
-        // Nas³uchujemy na zdarzenie zmiany tekstu bezpoœrednio z pola InputField
-        // (Zak³adaj¹c, ¿e SyntaxHighlighter te¿ nas³uchuje na to samo)
+    { 
         var inputField = targetInputRect.GetComponent<TMP_InputField>();
         if (inputField != null)
         {
             inputField.onValueChanged.AddListener(MarkAsDirty);
         }
     }
-
-    // Ta metoda jest wywo³ywana, gdy skrypt jest wy³¹czany
+     
     void OnDisable()
     {
         var inputField = targetInputRect.GetComponent<TMP_InputField>();
@@ -40,33 +36,28 @@ public class LayoutSynchronizer : MonoBehaviour
             inputField.onValueChanged.RemoveListener(MarkAsDirty);
         }
     }
-
-    // Gdy tekst siê zmienia, ustawiamy flagê "isDirty" na true
+     
     private void MarkAsDirty(string text)
     {
         isDirty = true;
     }
 
     void LateUpdate()
-    {
-        // Jeœli layout jest "brudny" (wymaga aktualizacji)
+    { 
         if (isDirty)
-        {
-            // Uruchamiamy Coroutine, która wykona siê na koniec tej klatki
+        { 
             StartCoroutine(UpdateLayoutCoroutine());
-            isDirty = false; // Resetujemy flagê
+            isDirty = false;  
         }
     }
-
-    // Coroutine do aktualizacji layoutu
+     
     private IEnumerator UpdateLayoutCoroutine()
-    {
-        // Czekamy na sam koniec klatki, PO tym jak UI zakoñczy wszystkie swoje operacje
+    { 
         yield return new WaitForEndOfFrame();
 
         if (sourceTextComponent == null || targetInputRect == null || contentRect == null)
         {
-            yield break; // Zakoñcz, jeœli coœ nie jest przypisane
+            yield break; 
         }
 
         float preferredHeight = sourceTextComponent.preferredHeight;

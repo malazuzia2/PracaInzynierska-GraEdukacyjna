@@ -13,72 +13,260 @@ MonoBehaviour:
   m_Name: Lvl_8
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: Pyramid
-  startingCodeHint: "-- Goal: Build a yellow pyramid.\r\n-- The size of each layer
-    should depend on its height 'y'.\r\n-- The 'size' variable is calculated for
-    you.\r\n-- Use it to limit the x and z coordinates.\r\n-- Hint: math.abs() helps
-    check both positive and negative sides at once.\r\n\r\nfunction PlaceVoxel(x,
-    y, z)\r\n  local color = 0\r\n  local size = 4 - y -- Layer at y=0 has size=4,
-    layer at y=1 has size=3...\r\n  \r\n  if y >= 0 and y < 4 then\r\n    -- Change
-    this condition to use the 'size' variable!\r\n    color = 4\r\n  end\r\n  \r\n 
-    return color\r\nend"
+  startingCodeHint: "-- Goal: Build a solid blue sphere (radius 3).\r\n-- Math Hint:
+    x*x + y*y + z*z = distance squared.\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n 
+    local color = 0\r\n  local radiusSquared = 9 -- (3 * 3)\r\n  \r\n  -- Calculate
+    current distance squared\r\n  local myDistSquared = (x * x) + (y * y) + (z *
+    z)\r\n  \r\n  -- TODO: Check if myDistSquared is less than or equal to radiusSquared\r\n 
+    if myDistSquared == 0 then -- Fix this condition\r\n    color = 3\r\n  end\r\n 
+    \r\n  return color\r\nend"
+  solutionCode: "function PlaceVoxel(x, y, z)\r\n    local color = 0\r\n    \r\n   
+    if (x * x) + (y * y) + (z * z) <= 9 then\r\n        color = 3 -- Niebieski\r\n   
+    end\r\n    \r\n    return color\r\nend"
   referenceShape:
+  - position: {x: -3, y: 0, z: 0}
+    blockType: 3
+  - position: {x: -2, y: -2, z: -1}
+    blockType: 3
+  - position: {x: -2, y: -2, z: 0}
+    blockType: 3
+  - position: {x: -2, y: -2, z: 1}
+    blockType: 3
+  - position: {x: -2, y: -1, z: -2}
+    blockType: 3
+  - position: {x: -2, y: -1, z: -1}
+    blockType: 3
+  - position: {x: -2, y: -1, z: 0}
+    blockType: 3
+  - position: {x: -2, y: -1, z: 1}
+    blockType: 3
+  - position: {x: -2, y: -1, z: 2}
+    blockType: 3
+  - position: {x: -2, y: 0, z: -2}
+    blockType: 3
+  - position: {x: -2, y: 0, z: -1}
+    blockType: 3
+  - position: {x: -2, y: 0, z: 0}
+    blockType: 3
+  - position: {x: -2, y: 0, z: 1}
+    blockType: 3
+  - position: {x: -2, y: 0, z: 2}
+    blockType: 3
+  - position: {x: -2, y: 1, z: -2}
+    blockType: 3
+  - position: {x: -2, y: 1, z: -1}
+    blockType: 3
+  - position: {x: -2, y: 1, z: 0}
+    blockType: 3
+  - position: {x: -2, y: 1, z: 1}
+    blockType: 3
+  - position: {x: -2, y: 1, z: 2}
+    blockType: 3
+  - position: {x: -2, y: 2, z: -1}
+    blockType: 3
+  - position: {x: -2, y: 2, z: 0}
+    blockType: 3
+  - position: {x: -2, y: 2, z: 1}
+    blockType: 3
+  - position: {x: -1, y: -2, z: -2}
+    blockType: 3
+  - position: {x: -1, y: -2, z: -1}
+    blockType: 3
+  - position: {x: -1, y: -2, z: 0}
+    blockType: 3
+  - position: {x: -1, y: -2, z: 1}
+    blockType: 3
+  - position: {x: -1, y: -2, z: 2}
+    blockType: 3
+  - position: {x: -1, y: -1, z: -2}
+    blockType: 3
+  - position: {x: -1, y: -1, z: -1}
+    blockType: 3
+  - position: {x: -1, y: -1, z: 0}
+    blockType: 3
+  - position: {x: -1, y: -1, z: 1}
+    blockType: 3
+  - position: {x: -1, y: -1, z: 2}
+    blockType: 3
+  - position: {x: -1, y: 0, z: -2}
+    blockType: 3
+  - position: {x: -1, y: 0, z: -1}
+    blockType: 3
+  - position: {x: -1, y: 0, z: 0}
+    blockType: 3
+  - position: {x: -1, y: 0, z: 1}
+    blockType: 3
+  - position: {x: -1, y: 0, z: 2}
+    blockType: 3
+  - position: {x: -1, y: 1, z: -2}
+    blockType: 3
+  - position: {x: -1, y: 1, z: -1}
+    blockType: 3
+  - position: {x: -1, y: 1, z: 0}
+    blockType: 3
+  - position: {x: -1, y: 1, z: 1}
+    blockType: 3
+  - position: {x: -1, y: 1, z: 2}
+    blockType: 3
+  - position: {x: -1, y: 2, z: -2}
+    blockType: 3
+  - position: {x: -1, y: 2, z: -1}
+    blockType: 3
+  - position: {x: -1, y: 2, z: 0}
+    blockType: 3
+  - position: {x: -1, y: 2, z: 1}
+    blockType: 3
+  - position: {x: -1, y: 2, z: 2}
+    blockType: 3
+  - position: {x: 0, y: -3, z: 0}
+    blockType: 3
+  - position: {x: 0, y: -2, z: -2}
+    blockType: 3
+  - position: {x: 0, y: -2, z: -1}
+    blockType: 3
+  - position: {x: 0, y: -2, z: 0}
+    blockType: 3
+  - position: {x: 0, y: -2, z: 1}
+    blockType: 3
+  - position: {x: 0, y: -2, z: 2}
+    blockType: 3
+  - position: {x: 0, y: -1, z: -2}
+    blockType: 3
+  - position: {x: 0, y: -1, z: -1}
+    blockType: 3
+  - position: {x: 0, y: -1, z: 0}
+    blockType: 3
+  - position: {x: 0, y: -1, z: 1}
+    blockType: 3
+  - position: {x: 0, y: -1, z: 2}
+    blockType: 3
+  - position: {x: 0, y: 0, z: -3}
+    blockType: 3
+  - position: {x: 0, y: 0, z: -2}
+    blockType: 3
+  - position: {x: 0, y: 0, z: -1}
+    blockType: 3
   - position: {x: 0, y: 0, z: 0}
-    blockType: 4
+    blockType: 3
   - position: {x: 0, y: 0, z: 1}
-    blockType: 4
+    blockType: 3
   - position: {x: 0, y: 0, z: 2}
-    blockType: 4
+    blockType: 3
   - position: {x: 0, y: 0, z: 3}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 1}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 2}
-    blockType: 4
-  - position: {x: 1, y: 0, z: 3}
-    blockType: 4
-  - position: {x: 2, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 0, z: 1}
-    blockType: 4
-  - position: {x: 2, y: 0, z: 2}
-    blockType: 4
-  - position: {x: 2, y: 0, z: 3}
-    blockType: 4
-  - position: {x: 3, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 3, y: 0, z: 1}
-    blockType: 4
-  - position: {x: 3, y: 0, z: 2}
-    blockType: 4
-  - position: {x: 3, y: 0, z: 3}
-    blockType: 4
+    blockType: 3
+  - position: {x: 0, y: 1, z: -2}
+    blockType: 3
+  - position: {x: 0, y: 1, z: -1}
+    blockType: 3
   - position: {x: 0, y: 1, z: 0}
-    blockType: 4
+    blockType: 3
   - position: {x: 0, y: 1, z: 1}
-    blockType: 4
+    blockType: 3
   - position: {x: 0, y: 1, z: 2}
-    blockType: 4
-  - position: {x: 1, y: 1, z: 0}
-    blockType: 4
-  - position: {x: 1, y: 1, z: 1}
-    blockType: 4
-  - position: {x: 1, y: 1, z: 2}
-    blockType: 4
-  - position: {x: 2, y: 1, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 1, z: 1}
-    blockType: 4
-  - position: {x: 2, y: 1, z: 2}
-    blockType: 4
+    blockType: 3
+  - position: {x: 0, y: 2, z: -2}
+    blockType: 3
+  - position: {x: 0, y: 2, z: -1}
+    blockType: 3
   - position: {x: 0, y: 2, z: 0}
-    blockType: 4
-  - position: {x: 0, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 0, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 0, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 0, y: 0, z: 0}
-    blockType: 4
+    blockType: 3
+  - position: {x: 0, y: 2, z: 1}
+    blockType: 3
+  - position: {x: 0, y: 2, z: 2}
+    blockType: 3
+  - position: {x: 0, y: 3, z: 0}
+    blockType: 3
+  - position: {x: 1, y: -2, z: -2}
+    blockType: 3
+  - position: {x: 1, y: -2, z: -1}
+    blockType: 3
+  - position: {x: 1, y: -2, z: 0}
+    blockType: 3
+  - position: {x: 1, y: -2, z: 1}
+    blockType: 3
+  - position: {x: 1, y: -2, z: 2}
+    blockType: 3
+  - position: {x: 1, y: -1, z: -2}
+    blockType: 3
+  - position: {x: 1, y: -1, z: -1}
+    blockType: 3
+  - position: {x: 1, y: -1, z: 0}
+    blockType: 3
+  - position: {x: 1, y: -1, z: 1}
+    blockType: 3
+  - position: {x: 1, y: -1, z: 2}
+    blockType: 3
+  - position: {x: 1, y: 0, z: -2}
+    blockType: 3
+  - position: {x: 1, y: 0, z: -1}
+    blockType: 3
+  - position: {x: 1, y: 0, z: 0}
+    blockType: 3
+  - position: {x: 1, y: 0, z: 1}
+    blockType: 3
+  - position: {x: 1, y: 0, z: 2}
+    blockType: 3
+  - position: {x: 1, y: 1, z: -2}
+    blockType: 3
+  - position: {x: 1, y: 1, z: -1}
+    blockType: 3
+  - position: {x: 1, y: 1, z: 0}
+    blockType: 3
+  - position: {x: 1, y: 1, z: 1}
+    blockType: 3
+  - position: {x: 1, y: 1, z: 2}
+    blockType: 3
+  - position: {x: 1, y: 2, z: -2}
+    blockType: 3
+  - position: {x: 1, y: 2, z: -1}
+    blockType: 3
+  - position: {x: 1, y: 2, z: 0}
+    blockType: 3
+  - position: {x: 1, y: 2, z: 1}
+    blockType: 3
+  - position: {x: 1, y: 2, z: 2}
+    blockType: 3
+  - position: {x: 2, y: -2, z: -1}
+    blockType: 3
+  - position: {x: 2, y: -2, z: 0}
+    blockType: 3
+  - position: {x: 2, y: -2, z: 1}
+    blockType: 3
+  - position: {x: 2, y: -1, z: -2}
+    blockType: 3
+  - position: {x: 2, y: -1, z: -1}
+    blockType: 3
+  - position: {x: 2, y: -1, z: 0}
+    blockType: 3
+  - position: {x: 2, y: -1, z: 1}
+    blockType: 3
+  - position: {x: 2, y: -1, z: 2}
+    blockType: 3
+  - position: {x: 2, y: 0, z: -2}
+    blockType: 3
+  - position: {x: 2, y: 0, z: -1}
+    blockType: 3
+  - position: {x: 2, y: 0, z: 0}
+    blockType: 3
+  - position: {x: 2, y: 0, z: 1}
+    blockType: 3
+  - position: {x: 2, y: 0, z: 2}
+    blockType: 3
+  - position: {x: 2, y: 1, z: -2}
+    blockType: 3
+  - position: {x: 2, y: 1, z: -1}
+    blockType: 3
+  - position: {x: 2, y: 1, z: 0}
+    blockType: 3
+  - position: {x: 2, y: 1, z: 1}
+    blockType: 3
+  - position: {x: 2, y: 1, z: 2}
+    blockType: 3
+  - position: {x: 2, y: 2, z: -1}
+    blockType: 3
+  - position: {x: 2, y: 2, z: 0}
+    blockType: 3
+  - position: {x: 2, y: 2, z: 1}
+    blockType: 3
+  - position: {x: 3, y: 0, z: 0}
+    blockType: 3

@@ -19,6 +19,8 @@ MonoBehaviour:
     color = 0\r\n  \r\n  if x == 0 and y == 0 and z == 0 then\r\n    -- Change this
     line to place a red block (type 1)\r\n    color = 0 \r\n  end\r\n  \r\n  return
     color\r\nend"
+  solutionCode: "function PlaceVoxel(x, y, z)\n  local color = 0\n  \n  if x == 0
+    and y == 0 and z == 0 then\n    color = 1\n  end\n  \n  return color\nend"
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
     blockType: 1

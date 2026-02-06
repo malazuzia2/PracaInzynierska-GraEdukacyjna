@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Lvl_10
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: 
-  startingCodeHint: "-- Final Challenge: Build a small house!\r\n-- Combine everything
-    you've learned.\r\n-- 1. Build the walls (like a hollow box).\r\n-- 2. Build
-    the roof (like a pyramid on top of the walls).\r\n-- 3. Use different colors
-    for the walls and the roof.\r\n-- Good luck!\r\n\r\nfunction PlaceVoxel(x, y,
-    z)\r\n  local color = 0\r\n  \r\n  -- Your logic for the walls...\r\n  \r\n 
-    -- Your logic for the roof...\r\n  \r\n  return color\r\nend"
+  startingCodeHint: "-- Final Challenge: Feel free to play and discover on your own!\r\n--
+    Have fun!\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n  local color = 0\r\n  \r\n\r\n 
+    \r\n  return color\r\nend"
+  solutionCode: 
   referenceShape: []

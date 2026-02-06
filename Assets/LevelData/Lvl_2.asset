@@ -13,15 +13,27 @@ MonoBehaviour:
   m_Name: Lvl_2
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: A Simple Line
-  startingCodeHint: "-- Goal: Build a green pillar 3 blocks high.\r\n-- This code
-    only builds the bottom block of the pillar (at y=0).\r\n-- How can you change
-    the 'y == 0' condition\r\n-- to include y=1 and y=2 as well?\r\n\r\nfunction
-    PlaceVoxel(x, y, z)\r\n  local color = 0\r\n  \r\n  if x == 0 and z == 0 and
-    y == 0 then\r\n    color = 2\r\n  end\r\n  \r\n  return color\r\nend"
+  startingCodeHint: "-- Goal: Build a green vertical line (pillar) at the center.\r\n--
+    The line should exist regardless of the 'y' height.\r\n\r\nfunction PlaceVoxel(x,
+    y, z)\r\n  local color = 0\r\n  \r\n  if x == 0 and z == 0 and y == 0 then\r\n   
+    color = 0\r\n  end\r\n  \r\n  return color\r\nend"
+  solutionCode: 
   referenceShape:
   - position: {x: 0, y: 0, z: 0}
     blockType: 2
   - position: {x: 0, y: 1, z: 0}
     blockType: 2
   - position: {x: 0, y: 2, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 3, z: 0}
+    blockType: 2
+  - position: {x: 0, y: 4, z: 0}
+    blockType: 2
+  - position: {x: 0, y: -1, z: 0}
+    blockType: 2
+  - position: {x: 0, y: -2, z: 0}
+    blockType: 2
+  - position: {x: 0, y: -3, z: 0}
+    blockType: 2
+  - position: {x: 0, y: -4, z: 0}
     blockType: 2

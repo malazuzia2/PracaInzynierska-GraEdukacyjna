@@ -12,26 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d5b11ce4dce9be49be43102afff5e06, type: 3}
   m_Name: Lvl_4
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: Two Pillars
-  startingCodeHint: "-- Goal: Build two yellow pillars.\r\n-- This code builds only
-    the LEFT pillar at x = -2.\r\n-- How can you change the 'if' statement\r\n--
-    to ALSO build the RIGHT pillar at x = 2?\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n 
-    local color = 0\r\n  \r\n  if x == -2 and z == 0 and y >= 0 and y < 4 then\r\n   
-    color = 4\r\n  end\r\n  \r\n  return color\r\nend"
+  levelName: Blue Cross
+  startingCodeHint: "-- Goal: Build a blue cross on the floor (y = -4).\r\n-- The
+    cross lines are along the X axis OR the Z axis.\r\n\r\nfunction PlaceVoxel(x,
+    y, z)\r\n  local color = 0\r\n\r\n  -- Check if we are on the floor level\r\n 
+    if y == -4 then\r\n    -- TODO: Add a check inside this 'if'.\r\n    -- The block
+    should be placed if x is 0 OR z is 0.\r\n       color = 0\r\n  end\r\n\r\n  return
+    color\r\nend"
+  solutionCode: 
   referenceShape:
-  - position: {x: -2, y: 0, z: 0}
-    blockType: 4
-  - position: {x: -2, y: 1, z: 0}
-    blockType: 4
-  - position: {x: -2, y: 2, z: 0}
-    blockType: 4
-  - position: {x: -2, y: 3, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 0, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 1, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 2, z: 0}
-    blockType: 4
-  - position: {x: 2, y: 3, z: 0}
-    blockType: 4
+  - position: {x: 0, y: -4, z: 0}
+    blockType: 3
+  - position: {x: 1, y: -4, z: 0}
+    blockType: 3
+  - position: {x: 2, y: -4, z: 0}
+    blockType: 3
+  - position: {x: 3, y: -4, z: 0}
+    blockType: 3
+  - position: {x: 4, y: -4, z: 0}
+    blockType: 3
+  - position: {x: -1, y: -4, z: 0}
+    blockType: 3
+  - position: {x: -2, y: -4, z: 0}
+    blockType: 3
+  - position: {x: -3, y: -4, z: 0}
+    blockType: 3
+  - position: {x: -4, y: -4, z: 0}
+    blockType: 3
+  - position: {x: 0, y: -4, z: 1}
+    blockType: 3
+  - position: {x: 0, y: -4, z: 2}
+    blockType: 3
+  - position: {x: 0, y: -4, z: 3}
+    blockType: 3
+  - position: {x: 0, y: -4, z: 4}
+    blockType: 3
+  - position: {x: 0, y: -4, z: -1}
+    blockType: 3
+  - position: {x: 0, y: -4, z: -2}
+    blockType: 3
+  - position: {x: 0, y: -4, z: -3}
+    blockType: 3
+  - position: {x: 0, y: -4, z: -4}
+    blockType: 3

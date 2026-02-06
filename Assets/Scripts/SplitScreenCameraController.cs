@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems; // Potrzebne do sprawdzania, czy kursor jest nad UI
+using UnityEngine.EventSystems;
 
 public class SplitScreenCameraController : MonoBehaviour
 { 

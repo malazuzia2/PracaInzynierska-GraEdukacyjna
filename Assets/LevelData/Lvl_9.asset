@@ -13,10 +13,140 @@ MonoBehaviour:
   m_Name: Lvl_9
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: 
-  startingCodeHint: "-- Goal: Create a blue sphere with a radius of 4.\r\n-- This
-    code calculates the distance of each block from the center.\r\n-- Add an 'if'
-    statement that checks if the 'distance'\r\n-- is less than 4, and if so, sets
-    the color to 3.\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n  local color = 0\r\n 
-    local distance = math.sqrt(x*x + y*y + z*z)\r\n  \r\n  -- Add your 'if' statement
-    here!\r\n  \r\n  return color\r\nend"
-  referenceShape: []
+  startingCodeHint: "-- Goal: 3D Checkerboard pattern inside a 5x5x5 cube.\r\n--
+    Hint: Check if the sum of x, y, z is even.\r\n\r\nfunction PlaceVoxel(x, y, z)\r\n 
+    local color = 0\r\n\r\n  -- Limit to a 5x5x5 box\r\n  if math.abs(x) <= 2 and
+    math.abs(y) <= 2 and math.abs(z) <= 2 then\r\n    \r\n    local sum = x + y +
+    z\r\n    \r\n    -- TODO: Check if 'sum' is even using modulo (%)\r\n    -- Set
+    color to 1 if it is.\r\n  end\r\n  \r\n  return color\r\nend"
+  solutionCode: "function PlaceVoxel(x, y, z)\r\n    local color = 0\r\n    \r\n   
+    if math.abs(x) <= 2 and math.abs(y) <= 2 and math.abs(z) <= 2 then\r\n       
+    if (x + y + z) % 2 == 0 then\r\n            color = 1 -- Czerwony\r\n       
+    end\r\n    end\r\n    \r\n    return color\r\nend"
+  referenceShape:
+  - position: {x: -2, y: -2, z: -2}
+    blockType: 1
+  - position: {x: -2, y: -2, z: 0}
+    blockType: 1
+  - position: {x: -2, y: -2, z: 2}
+    blockType: 1
+  - position: {x: -2, y: -1, z: -1}
+    blockType: 1
+  - position: {x: -2, y: -1, z: 1}
+    blockType: 1
+  - position: {x: -2, y: 0, z: -2}
+    blockType: 1
+  - position: {x: -2, y: 0, z: 0}
+    blockType: 1
+  - position: {x: -2, y: 0, z: 2}
+    blockType: 1
+  - position: {x: -2, y: 1, z: -1}
+    blockType: 1
+  - position: {x: -2, y: 1, z: 1}
+    blockType: 1
+  - position: {x: -2, y: 2, z: -2}
+    blockType: 1
+  - position: {x: -2, y: 2, z: 0}
+    blockType: 1
+  - position: {x: -2, y: 2, z: 2}
+    blockType: 1
+  - position: {x: -1, y: -2, z: -1}
+    blockType: 1
+  - position: {x: -1, y: -2, z: 1}
+    blockType: 1
+  - position: {x: -1, y: -1, z: -2}
+    blockType: 1
+  - position: {x: -1, y: -1, z: 0}
+    blockType: 1
+  - position: {x: -1, y: -1, z: 2}
+    blockType: 1
+  - position: {x: -1, y: 0, z: -1}
+    blockType: 1
+  - position: {x: -1, y: 0, z: 1}
+    blockType: 1
+  - position: {x: -1, y: 1, z: -2}
+    blockType: 1
+  - position: {x: -1, y: 1, z: 0}
+    blockType: 1
+  - position: {x: -1, y: 1, z: 2}
+    blockType: 1
+  - position: {x: -1, y: 2, z: -1}
+    blockType: 1
+  - position: {x: -1, y: 2, z: 1}
+    blockType: 1
+  - position: {x: 0, y: -2, z: -2}
+    blockType: 1
+  - position: {x: 0, y: -2, z: 0}
+    blockType: 1
+  - position: {x: 0, y: -2, z: 2}
+    blockType: 1
+  - position: {x: 0, y: -1, z: -1}
+    blockType: 1
+  - position: {x: 0, y: -1, z: 1}
+    blockType: 1
+  - position: {x: 0, y: 0, z: -2}
+    blockType: 1
+  - position: {x: 0, y: 0, z: 0}
+    blockType: 1
+  - position: {x: 0, y: 0, z: 2}
+    blockType: 1
+  - position: {x: 0, y: 1, z: -1}
+    blockType: 1
+  - position: {x: 0, y: 1, z: 1}
+    blockType: 1
+  - position: {x: 0, y: 2, z: -2}
+    blockType: 1
+  - position: {x: 0, y: 2, z: 0}
+    blockType: 1
+  - position: {x: 0, y: 2, z: 2}
+    blockType: 1
+  - position: {x: 1, y: -2, z: -1}
+    blockType: 1
+  - position: {x: 1, y: -2, z: 1}
+    blockType: 1
+  - position: {x: 1, y: -1, z: -2}
+    blockType: 1
+  - position: {x: 1, y: -1, z: 0}
+    blockType: 1
+  - position: {x: 1, y: -1, z: 2}
+    blockType: 1
+  - position: {x: 1, y: 0, z: -1}
+    blockType: 1
+  - position: {x: 1, y: 0, z: 1}
+    blockType: 1
+  - position: {x: 1, y: 1, z: -2}
+    blockType: 1
+  - position: {x: 1, y: 1, z: 0}
+    blockType: 1
+  - position: {x: 1, y: 1, z: 2}
+    blockType: 1
+  - position: {x: 1, y: 2, z: -1}
+    blockType: 1
+  - position: {x: 1, y: 2, z: 1}
+    blockType: 1
+  - position: {x: 2, y: -2, z: -2}
+    blockType: 1
+  - position: {x: 2, y: -2, z: 0}
+    blockType: 1
+  - position: {x: 2, y: -2, z: 2}
+    blockType: 1
+  - position: {x: 2, y: -1, z: -1}
+    blockType: 1
+  - position: {x: 2, y: -1, z: 1}
+    blockType: 1
+  - position: {x: 2, y: 0, z: -2}
+    blockType: 1
+  - position: {x: 2, y: 0, z: 0}
+    blockType: 1
+  - position: {x: 2, y: 0, z: 2}
+    blockType: 1
+  - position: {x: 2, y: 1, z: -1}
+    blockType: 1
+  - position: {x: 2, y: 1, z: 1}
+    blockType: 1
+  - position: {x: 2, y: 2, z: -2}
+    blockType: 1
+  - position: {x: 2, y: 2, z: 0}
+    blockType: 1
+  - position: {x: 2, y: 2, z: 2}
+    blockType: 1
