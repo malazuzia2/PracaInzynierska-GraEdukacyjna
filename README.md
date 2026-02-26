@@ -10,9 +10,7 @@ Developed as a Bachelor's thesis project at Lodz University of Technology.
 
 ## Preview
 
-```
 ![Gameplay](https://github.com/malazuzia2/PracaInzynierska-GraEdukacyjna/blob/main/screenshots/GamePreview.png)
-```
 
 ## How It Works
 
