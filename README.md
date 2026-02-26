@@ -58,12 +58,11 @@ Assets/
 │   ├── CubeGridManager.cs       ← 3D grid management
 │   ├── LevelManager.cs          ← level system
 │   └── SyntaxHighlighter.cs     ← Lua syntax highlighting (Regex + Rich Text)
-├── ScriptableObjects/
-│   └── Levels/                  ← LevelData asset files
+├── LevelData/                   ← LevelData asset files
 ├── Prefabs/
-│   └── Cube.prefab              ← single cube prefab (Flyweight)
+│   └── Cube_pref.prefab              ← single cube prefab (Flyweight)
 └── Scenes/
-    └── Main.unity
+    └── SampleScene.unity
 ```
 
 ---
@@ -90,7 +89,7 @@ Assets/
 
 3. Unity will automatically import all dependencies (NLua, TextMeshPro)
 
-4. Open the scene `Assets/Scenes/Main.unity`
+4. Open the scene `Assets/Scenes/SampleScene.unity`
 
 5. Press **Play** 
 
@@ -99,7 +98,7 @@ Assets/
 New levels can be created without touching any source code:
 
 ```
-Assets → Create → LevelData
+Create → Game → Level Data
 ```
 
 Fill in the fields in the Inspector:
