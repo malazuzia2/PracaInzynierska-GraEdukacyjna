@@ -11,7 +11,7 @@ Developed as a Bachelor's thesis project at Lodz University of Technology.
 ## Preview
 
 ```
-<img width="1635" height="917" alt="Image" src="https://github.com/user-attachments/assets/95bd1fd7-a7b8-45f6-b45a-b3df9a0ebb8f" />
+![Gameplay](https://github.com/malazuzia2/PracaInzynierska-GraEdukacyjna/blob/main/screenshots/GamePreview.png)
 ```
 
 ## How It Works
